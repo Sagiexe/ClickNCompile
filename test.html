@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Signaling Test</title>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>WebRTC Signaling Test</h1>
+  <button onclick="joinRoom()">Join Room</button>
+
+  <script>
+    const socket = io('http://localhost:3000');
+    const roomName = 'test-room';
+
+    socket.on('connect', () => {
+      console.log('Connected to signaling server:', socket.id);
+    });
+
+    function joinRoom() {
+      console.log('Joining room:', roomName);
+      socket.emit('join', roomName);
+    }
+
+    socket.on('ready', ({ peerId }) => {
+      console.log('Ready to communicate with peer:', peerId);
+      // Here you'd initiate WebRTC peer connection setup
+    });
+
+    socket.on('signal', ({ from, data }) => {
+      console.log('Signal received from:', from, data);
+    });
+  </script>
+</body>
+</html>
