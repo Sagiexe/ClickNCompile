@@ -23,6 +23,13 @@ function addOne() {
         clickPower: clickPower,
         numberOfLPCOwned: numberOfLPCOwned
     });
+
+    document.getElementById("counter").innerHTML = "lines: " + lines;
+
+    sendGameData({
+        type:'click',
+        count: clickPower
+    });
 }
 document.addEventListener('keyup', function(event) {
     addOne(); 
@@ -43,3 +50,6 @@ function addClickPower() {
 function calculateBuildingPrice(basePrice, numberOfBuildingsOwned){
     return Math.ceil(basePrice * Math.pow(1.15, numberOfBuildingsOwned));
 }
+
+export function handlePeerClick(count){
+    peerClickCount += count;}
