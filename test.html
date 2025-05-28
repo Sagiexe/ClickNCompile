@@ -19,6 +19,12 @@
     function joinRoom() {
       console.log('Joining room:', roomName);
       socket.emit('join', roomName);
+
+      sessionStorage.setItem('room',roomName);
+
+      setTimeout(() =>{
+        window.location.href = 'client/index.html';
+      },500);
     }
 
     socket.on('ready', ({ peerId }) => {

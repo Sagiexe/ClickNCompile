@@ -1,3 +1,5 @@
+import { sendGameData } from "../network/peerManager";
+
 var lines = 0;
 var clickPower = 1;
 
@@ -7,6 +9,12 @@ var numberOfLPCOwned = 0;
 function addOne() {
     lines += clickPower;
     document.getElementById("counter").innerHTML = "lines: " + lines;
+
+    sendGameData({
+        type:'click',
+        count: clickPower
+    });
+
 }
 document.addEventListener('keyup', function(event) {
     addOne(); 
@@ -32,4 +40,9 @@ function addClickPower() {
 
 function calculateBuildingPrice(basePrice, numberOfBuildingsOwned){
     return Math.ceil(basePrice * Math.pow(1.15, numberOfBuildingsOwned));
+}
+
+export function handlePeerClick(count){
+    peerClickCount += count;
+    //TODO: add update ui function 
 }
