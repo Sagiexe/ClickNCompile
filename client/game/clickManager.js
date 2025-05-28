@@ -17,7 +17,12 @@ function updateUI() {
 
 function addOne() {
     lines += clickPower;
-    document.getElementById("counter").innerHTML = "lines: " + lines;
+    updateUI();
+    sendGameData({
+        lines: lines,
+        clickPower: clickPower,
+        numberOfLPCOwned: numberOfLPCOwned
+    });
 }
 document.addEventListener('keyup', function(event) {
     addOne(); 
