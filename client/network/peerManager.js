@@ -1,5 +1,6 @@
 import Peer from 'simple-peer';
 import { sendSignal, getSocketId } from './socket.js';
+import { handlePeerClick } from '../game/clickManager.js';
 
 let peer;
 
@@ -17,10 +18,9 @@ export function onReadyToConnect(peerId) {
 
   peer.on('data', data => {
     const message = JSON.parse(data);
+
     if (message.type === 'click') {
-      // Handle click event
-      console.log('Received click count:', message.count);
-      // Update game state here
+      handlePeerClick(message.count);
     }
   });
 }

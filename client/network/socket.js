@@ -3,9 +3,12 @@ import io from 'socket.io-client';
 
 const socket = io('http://localhost:3000');
 
-export function joinRoom(roomName) {
-  socket.emit('join', roomName);
-}
+let mySocketId = null;
+
+socket.on('connect', () => {
+  mySocketId = socket.id;
+  socket.emit('join', 'default-room');
+});
 
 socket.on('signal', ({ from, data }) => {
   onSignalReceived(from, data); // Forward signal to peer manager
@@ -24,5 +27,5 @@ export function sendSignal(to, data) {
 }
 
 export function getSocketId() {
-  return socket.id;
+  return mySocketId;
 }
