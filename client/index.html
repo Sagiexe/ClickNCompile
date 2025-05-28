@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="./game/clickManager.js"></script>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Click & Compile</title>
 </head>
 <body>
-	
+	<h1>Click & Compile</h1>
+    <br>
+
+    <button onclick="addOne()">Click Me</button>
+    <div id="counter">0</div>
+    
+    <br>
+    
+    <div>lines per click: </div>
+    <p id="lpc"></p>
+    <button onclick="addClickPower()">Buy more lines per click</button>
 </body>
-</html>
+</html> 
