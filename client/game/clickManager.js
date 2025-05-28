@@ -1,5 +1,5 @@
-import { sendGameData } from "../network/peerManager";
-
+//import { sendGameData } from "../network/peerManager";
+//TODO: this fucking line ruins my code. fix this shit asap. then uncomment everything
 var lines = 0;
 var clickPower = 1;
 
@@ -18,18 +18,17 @@ function updateUI() {
 function addOne() {
     lines += clickPower;
     updateUI();
-    sendGameData({
-        lines: lines,
+
+
+/*    sendGameData({
+    lines: lines,
         clickPower: clickPower,
         numberOfLPCOwned: numberOfLPCOwned
     });
-
-    document.getElementById("counter").innerHTML = "lines: " + lines;
-
     sendGameData({
         type:'click',
         count: clickPower
-    });
+    });*/
 }
 document.addEventListener('keyup', function(event) {
     addOne(); 
@@ -50,6 +49,10 @@ function addClickPower() {
 function calculateBuildingPrice(basePrice, numberOfBuildingsOwned){
     return Math.ceil(basePrice * Math.pow(1.15, numberOfBuildingsOwned));
 }
-
+/*
 export function handlePeerClick(count){
-    peerClickCount += count;}
+    peerClickCount += count;
+}*/
+
+window.addOne = addOne;
+window.addClickPower = addClickPower;
