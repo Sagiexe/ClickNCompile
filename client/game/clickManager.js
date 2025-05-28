@@ -1,3 +1,5 @@
+import { sendGameData } from "../network/peerManager";
+
 var lines = 0;
 var clickPower = 1;
 
@@ -15,7 +17,7 @@ function updateUI() {
 
 function addOne() {
     lines += clickPower;
-    updateUI();
+    document.getElementById("counter").innerHTML = "lines: " + lines;
 }
 document.addEventListener('keyup', function(event) {
     addOne(); 
