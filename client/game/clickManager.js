@@ -1,5 +1,5 @@
-//import { sendGameData } from "../network/peerManager";
-//TODO: this fucking line ruins my code. fix this shit asap. then uncomment everything
+//TODO:FIX LAGGY BUTTONS UPDATE IT WTF IS THE DELAY EVEN COMING FROM
+import { typeNextCharacter, deleteCharacters } from "./UIBuilder.js";
 var lines = 0;
 var clickPower = 1;
 
@@ -9,6 +9,10 @@ var numberOfLPCOwned = 0;
 const FRIEND_BASE_LPS = 1;
 const FRIEND_BASE_PRICE = 50;
 var numberOfFriends = 0;
+
+document.getElementById("addLines").addEventListener("click", addOne);
+document.getElementById("buyLpc").addEventListener("click", addClickPower);
+document.getElementById("buyFriend").addEventListener("click", addFriend);
 
 function updateUI() {
     document.getElementById("counter").innerText = "lines: " + lines;
@@ -22,20 +26,16 @@ function updateUI() {
     document.getElementById("buyFriend").innerText = "Add friend to project (+1 lpc) (Cost: " + newFriendPrice +  ")";
 
     document.getElementById("lps").innerText = "Lines Per Second: " + getLinesPerSecond();
+
 }
 
 function addOne() {
-    lines += clickPower;
+    lines += clickPower; 
+    for (let i = 0; i < clickPower; i++) {
+        typeNextCharacter();
+      }
     updateUI();
-/*    sendGameData({
-    lines: lines,
-        clickPower: clickPower,
-        numberOfLPCOwned: numberOfLPCOwned
-    });
-    sendGameData({
-        type:'click',
-        count: clickPower
-    });*/
+
 }
 document.addEventListener('keyup', function(event) {
     addOne(); 
@@ -43,12 +43,14 @@ document.addEventListener('keyup', function(event) {
 
 function addClickPower() {
 
-    purchasePrice = calculateBuildingPrice(LPC_BASE_PRICE, numberOfLPCOwned);
+    let purchasePrice = calculateBuildingPrice(LPC_BASE_PRICE, numberOfLPCOwned);
     
     if(purchasePrice <= lines){
         clickPower++;
         lines -= purchasePrice;
         numberOfLPCOwned++;
+
+        deleteCharacters(purchasePrice); 
     }
 }
 function addFriend(){
@@ -57,16 +59,15 @@ function addFriend(){
     if(purchasePrice <= lines){
         lines -= purchasePrice;
         numberOfFriends++;
+
+        deleteCharacters(purchasePrice); 
     }
 }
 
 function calculateBuildingPrice(basePrice, numberOfBuildingsOwned){
     return Math.ceil(basePrice * Math.pow(1.15, numberOfBuildingsOwned));
 }
-/*
-export function handlePeerClick(count){
-    peerClickCount += count;
-}*/
+
 
 function getLinesPerSecond() {
     return numberOfFriends * FRIEND_BASE_LPS;
@@ -75,4 +76,8 @@ function getLinesPerSecond() {
 setInterval(() => {
     lines += getLinesPerSecond();
     updateUI();
-}, interval = 1000);
+},1000);
+
+
+
+

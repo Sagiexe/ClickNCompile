@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="./game/clickManager.js"></script>
+    
+    
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,10 +12,17 @@
 </head>
 <body>
 	<h1>Click & Compile</h1>
+    <pre id="codeBlock"></pre>
+    
     <div id="counter">lines: 0</div>
     <div id="lps">Lines Per Second: 0</div>
-    <button onclick="addOne()" id="addLines">+1 lines</button>
-    <button onclick="addClickPower()" id="buyLpc">Buy more lines per click (Cost: 10)</button>
-    <button onclick="addFriend()" id="buyFriend">Add friend to project (+1 lpc) (Cost: 50)</button>
+    <button  id="addLines">+1 lines</button>
+    <button id="buyLpc">Buy more lines per click (Cost: 10)</button>
+    <button  id="buyFriend">Add friend to project (+1 lpc) (Cost: 50)</button>
+
+
+    <script type="module" src="./game/clickManager.js"></script>
+ 
+   
 </body>
 </html> 
