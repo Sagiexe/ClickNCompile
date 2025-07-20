@@ -1,3 +1,5 @@
+import { upgradesState } from "./upgrades.js";
+
 const target = document.getElementById('codeBlock');
 let code = "";
 let i = 0;
@@ -29,34 +31,40 @@ const files = [
 
   export function typeNextCharacter() {
     if (i < code.length) {
-      const char = code[i++];
-      const cursor = document.querySelector('.cursor');
-  
-      if (char === "\n") {
-        const br = document.createElement("br");
-        target.insertBefore(br, cursor);
-      } else {
-        const charSpan = document.createElement("span");
-        charSpan.classList.add("char");
-  
-        if (char === " ") {
-          charSpan.innerHTML = "&nbsp;";
+        const char = code[i++];
+        const cursor = document.querySelector('.cursor');
+
+        if (char === "\n") {
+            const br = document.createElement("br");
+            target.insertBefore(br, cursor);
         } else {
-          charSpan.textContent = char;
+            const charSpan = document.createElement("span");
+            charSpan.classList.add("char");
+
+            if (char === " ") {
+                charSpan.innerHTML = "&nbsp;";
+            } else {
+                charSpan.textContent = char;
+            }
+
+            if (upgradesState.syntaxHighlight) {
+                const highlightClass = getHighlightClass(char);
+                if (highlightClass) {
+                    charSpan.classList.add(highlightClass);
+                }
+            }
+
+            target.insertBefore(charSpan, cursor);
+            requestAnimationFrame(() => charSpan.classList.add("visible"));
         }
-  
-        target.insertBefore(charSpan, cursor);
-        requestAnimationFrame(() => charSpan.classList.add("visible"));
-        }
-        
+
         target.scrollTop = target.scrollHeight;
-   
-    }
-    else {
+    } else {
         i = 0;
         typeNextCharacter();
     }
-  }
+}
+
   
   export function deleteCharacters(count) {
     const nodes = Array.from(target.childNodes)
@@ -85,17 +93,33 @@ const files = [
     if (cursor) {
       target.appendChild(cursor); // re-appending moves it to end
     }
-  }
-  
-
-  
+  } 
   // Ensure cursor is always present
   if (!document.querySelector('.cursor')) {
     const cursor = document.createElement("span");
     cursor.classList.add("cursor");
     target.appendChild(cursor);
-  }
+}
+  
+function getHighlightClass(char) {
+  if ("{}[]()".includes(char)) return "token-bracket";
+  if ("\"'".includes(char)) return "token-string";
+  if (/[=:+\-*/<>]/.test(char)) return "token-operator";
+  if (/\d/.test(char)) return "token-number";
+  return "";
+}
 
+export function applySyntaxHighlighting() {
+  if (!upgradesState.syntaxHighlight) return;
 
+  const charNodes = document.querySelectorAll("#codeBlock .char");
+  charNodes.forEach(node => {
+      const char = node.textContent.trim() || " ";
+      const highlightClass = getHighlightClass(char);
 
-    
+      if (highlightClass) {
+          node.classList.add(highlightClass);
+      }
+  });
+}
+

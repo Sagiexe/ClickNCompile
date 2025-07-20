@@ -33,4 +33,20 @@
 .char.remove {
     opacity: 0;
     transform: scale(0.7);
-    transition: opacity 1s ease, transform 1s ease; }
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.token-bracket {
+    color: #ff8c00;
+}
+.token-string {
+    color: #2ecc71;
+}
+
+.token-operator {
+    color: #e74c3c;
+}
+
+.token-number {
+    color: #9b59b6;
+}
